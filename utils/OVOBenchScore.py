@@ -78,6 +78,8 @@ class OVOBenchOfflineScore():
             "realtime": [],
             "forward": []
         }
+        # per-mode averages; stay None for modes that were not evaluated (task subset runs)
+        backward_score = realtime_score = forward_score = None
 
         if len(backward_results) > 0:
             print("Evaluate Backward Tracing...")
@@ -130,5 +132,7 @@ class OVOBenchOfflineScore():
             # total_forward = 0
             pass
 
-        print(f"Total Avg.: {(backward_score + realtime_score + forward_score) / 3:.2f}")
+        mode_scores = [s for s in (backward_score, realtime_score, forward_score) if s is not None]
+        note = "" if len(mode_scores) == 3 else f"  (over {len(mode_scores)} evaluated mode(s) only)"
+        print(f"Total Avg.: {sum(mode_scores) / len(mode_scores):.2f}{note}")
 

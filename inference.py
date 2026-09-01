@@ -77,6 +77,10 @@ elif args.model == "Dispider":
     from models.Dispider import EvalDispider
     assert os.path.exists(args.model_path)
     model = EvalDispider(args)
+elif args.model == "Qwen3VL_8B":
+    from models.Qwen3VL import EvalQwen3VL
+    assert os.path.exists(args.model_path)
+    model = EvalQwen3VL(args)
 else:
     raise ValueError(f"Unsupported model: {args.model}. Please implement the model.")
 
