@@ -77,16 +77,10 @@ elif args.model == "Dispider":
     from models.Dispider import EvalDispider
     assert os.path.exists(args.model_path)
     model = EvalDispider(args)
-elif args.model == "Qwen3VL_8B":
-    from models.Qwen3VL import EvalQwen3VL
-    assert os.path.exists(args.model_path)
-    model = EvalQwen3VL(args)
-elif args.model in ["Qwen3_6_27B", "Qwen3_8_27B", "Qwen3_6_35B_A3B"]:
-    from models.Qwen3_5 import EvalQwen3_5
-    assert os.path.exists(args.model_path)
-    model = EvalQwen3_5(args)
 else:
-    raise ValueError(f"Unsupported model: {args.model}. Please implement the model.")
+    # every other name is a method of the svlm registry (src/svlm/methods.py); unknown names raise there
+    from models.SVLM import EvalSVLM
+    model = EvalSVLM(args)
 
 with open(args.anno_path, "r") as f:
     annotations = json.load(f)
